@@ -89,7 +89,7 @@ h1 {
     border: 1px solid var(--light-purple);
     font-size: 1.1rem;
     color: var(--light-purple);
-    padding: .8em;
+    padding: 0.8em;
     text-transform: uppercase;
     cursor: pointer;
 }
@@ -147,7 +147,6 @@ section p {
     margin: auto;
     width: 80%;
     grid-template-columns: repeat(auto-fit , minmax(300px, 1fr));
-    justify-content: center;
     align-items: center;
 }
 
@@ -159,4 +158,88 @@ h3 {
     text-align: center;
     font-size: 1.3rem;
     color: var(--light-purple);  
+}
+
+.sub-heading {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.services-grid {
+    width: 70%;
+    margin: 2rem auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.service {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.service-icon {
+    width: 5rem;
+    height: 5rem;
+    background: var(--light-purple);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.material-icons {
+    font-size: 50px !important;
+    color: white;
+}
+
+.gallery-buttons {
+    display: grid;
+    width: 50%;
+    max-width: 600px;
+    margin: 2rem auto;
+    grid-template-columns: repeat(4, auto);
+    text-align: center;
+}
+
+.gallery-button {
+    font-size: .8rem;
+    margin: 0 1.5em;
+    
+}
+
+.gallery-image-container {
+    display: grid;
+    margin: 0 auto;
+    width: 80%;
+    grid-template-columns: repeat(4, 170px);
+    grid-template-rows: repeat(3, auto);
+    gap: 20px;
+    justify-content: center;
+}
+
+.stats {
+    padding: 5rem 0;
+}
+
+.counter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.counter h3 {
+    text-transform: uppercase;
+}
+
+.counter-text {
+    font-size: 3.5rem;
+}
+
+.stats-container {
+    width: 70%;
+    margin: 2rem auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding-top: 2rem;
 }
