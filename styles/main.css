@@ -94,6 +94,8 @@ h1 {
     cursor: pointer;
 }
 
+.button:focus {outline:0;}
+
 .button:hover,
 .solid-button {
     border: none;
@@ -242,4 +244,65 @@ h3 {
     margin: 2rem auto;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     padding-top: 2rem;
+}
+
+.testimonials
+{
+    position: relative;
+}
+
+.testimonials p {
+    margin: 0;
+    text-align: justify;
+    padding: 2rem;
+}
+
+.left-block,
+.right-block
+{
+    position: absolute;
+    top:0;
+    bottom:0;
+    width: 23vw;
+    background: white;
+}
+
+.left-block {
+    left: 0;
+}
+
+.right-block {
+    right: 0;
+}
+
+.testimonials-container {
+    display: flex;
+    margin-left: 25vw;
+    margin-top: 6rem;
+}
+
+.testimonial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 50vw;
+}
+
+.testimonial-image {
+    height: 200px;
+    width: 200px;
+    border-radius: 10%;
+}
+
+.testimonial-button-container {
+    display: flex;
+    justify-content: center;
+
+}
+
+.testimonial-button {
+    width: 1.5rem;
+    height: 8px;
+    padding: 0;
+    margin: 0 0.8rem;
 }
