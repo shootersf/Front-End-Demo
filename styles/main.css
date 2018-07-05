@@ -3,6 +3,8 @@
     --font-dark: #666;
     --light-purple: #C74EA6;
     --dark-purple: #9e3e85;
+    --header-blue: rgba(49, 49, 211, 0.65);
+    --header-purple: rgba(194, 67, 194, 0.65)
 }
 
 body {
@@ -16,7 +18,7 @@ header {
     height: 43rem;
     background-color: aquamarine; /*fallback*/
     background:
-    linear-gradient(rgba(49, 49, 211, 0.65), rgba(194, 67, 194, 0.65)), 
+    linear-gradient(var(--header-blue), var(--header-purple)), 
     url("https://images.unsplash.com/photo-1455819760800-d2aa223b237a?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=fe8349a1b1abafbf68805ea43fcceda8")
     center no-repeat;
     background-size: cover;
@@ -305,4 +307,49 @@ h3 {
     height: 8px;
     padding: 0;
     margin: 0 0.8rem;
+}
+
+.contact-container {
+    width: 50%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    margin: 2rem auto;
+}
+
+#message {
+    grid-column: 1 / span 2;
+    margin: 0 1rem;
+    padding: .4rem;
+}
+
+input {
+    margin: 1rem;
+    padding: .4rem;
+}
+
+.form-button {
+    display: block;
+    margin: 1rem auto;
+}
+
+.social-media-icons {
+    margin-top: 8rem;
+    display: flex;
+    justify-content: center;
+}
+
+.fab {
+    flex-basis: 5rem;
+    font-size: 1.6rem;
+    color: var(--light-purple);
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    width: 100%;
+    height: 5rem;
+    line-height: 5rem;
+    background: linear-gradient(to left, rgba(49, 49, 211, 1), rgba(194, 67, 194, 1));
+    color: rgba(255,255,255,0.5);
 }
