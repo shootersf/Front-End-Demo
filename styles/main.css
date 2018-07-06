@@ -3,12 +3,15 @@
     --font-dark: #666;
     --light-purple: #C74EA6;
     --dark-purple: #9e3e85;
+    --header-blue: rgba(49, 49, 211, 0.65);
+    --header-purple: rgba(194, 67, 194, 0.65)
 }
 
 body {
     margin: 0;
     font-family: 'Open Sans', sans-serif;
     color: var(--font-dark);
+    overflow-x: hidden; /* hidding the testimonials off page */
 }
 
 header {
@@ -16,7 +19,7 @@ header {
     height: 43rem;
     background-color: aquamarine; /*fallback*/
     background:
-    linear-gradient(rgba(49, 49, 211, 0.65), rgba(194, 67, 194, 0.65)), 
+    linear-gradient(var(--header-blue), var(--header-purple)), 
     url("https://images.unsplash.com/photo-1455819760800-d2aa223b237a?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=fe8349a1b1abafbf68805ea43fcceda8")
     center no-repeat;
     background-size: cover;
@@ -111,6 +114,11 @@ h1 {
     box-shadow: 0 -3px 0 1.1px var(--dark-purple);
 }
 
+section {
+    background: white;
+    padding-top: 8rem;
+}
+
 h2 {
     text-align: center;
     text-transform: uppercase;
@@ -131,10 +139,6 @@ h2::after {
     left: 0;
     right: 0;
     margin: auto;
-}
-
-section {
-    margin: 7rem 0;
 }
 
 section p {
@@ -169,7 +173,8 @@ h3 {
 
 .services-grid {
     width: 70%;
-    margin: 2rem auto;
+    margin: 0 auto;
+    padding-top: 3rem;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
@@ -214,6 +219,7 @@ h3 {
 .gallery-image-container {
     display: grid;
     margin: 0 auto;
+    padding: 3rem 0;
     width: 80%;
     grid-template-columns: repeat(4, 170px);
     grid-template-rows: repeat(3, auto);
@@ -223,6 +229,19 @@ h3 {
 
 .stats {
     padding: 5rem 0;
+    color: var(--font-light);
+    background: linear-gradient(var(--header-blue), var(--header-purple));
+
+}
+
+.static-background-image {
+    width: 100%;
+    position: fixed;
+    /* centers the image vertically moving down half the page and then
+    translating back half it's size. Beautiful */
+    top: 50%;
+    transform: translate(0 , -50%);
+    z-index: -100;
 }
 
 .counter {
@@ -305,4 +324,53 @@ h3 {
     height: 8px;
     padding: 0;
     margin: 0 0.8rem;
+}
+
+.contact-container {
+    width: 50%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    margin: 2rem auto;
+}
+
+#message {
+    grid-column: 1 / span 2;
+    margin: 0 1rem;
+    padding: .4rem;
+}
+
+input {
+    margin: 1rem;
+    padding: .4rem;
+}
+
+.form-button {
+    display: block;
+    margin: 1rem auto;
+}
+
+.social-media-icons {
+    padding: 6rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.fab {
+    flex-basis: 5rem;
+    font-size: 1.6rem;
+    color: var(--light-purple);
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    width: 100%;
+    height: 5rem;
+    line-height: 5rem;
+    background: linear-gradient(to left, rgba(49, 49, 211, 1), rgba(194, 67, 194, 1));
+    color: rgba(255,255,255,0.5);
+}
+
+footer p {
+    margin: 0;
 }
