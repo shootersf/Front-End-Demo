@@ -11,6 +11,7 @@ body {
     margin: 0;
     font-family: 'Open Sans', sans-serif;
     color: var(--font-dark);
+    overflow-x: hidden; /* hidding the testimonials off page */
 }
 
 header {
@@ -113,6 +114,11 @@ h1 {
     box-shadow: 0 -3px 0 1.1px var(--dark-purple);
 }
 
+section {
+    background: white;
+    padding-top: 8rem;
+}
+
 h2 {
     text-align: center;
     text-transform: uppercase;
@@ -133,10 +139,6 @@ h2::after {
     left: 0;
     right: 0;
     margin: auto;
-}
-
-section {
-    margin: 7rem 0;
 }
 
 section p {
@@ -171,7 +173,8 @@ h3 {
 
 .services-grid {
     width: 70%;
-    margin: 2rem auto;
+    margin: 0 auto;
+    padding-top: 3rem;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
@@ -216,6 +219,7 @@ h3 {
 .gallery-image-container {
     display: grid;
     margin: 0 auto;
+    padding: 3rem 0;
     width: 80%;
     grid-template-columns: repeat(4, 170px);
     grid-template-rows: repeat(3, auto);
@@ -225,6 +229,19 @@ h3 {
 
 .stats {
     padding: 5rem 0;
+    color: var(--font-light);
+    background: linear-gradient(var(--header-blue), var(--header-purple));
+
+}
+
+.static-background-image {
+    width: 100%;
+    position: fixed;
+    /* centers the image vertically moving down half the page and then
+    translating back half it's size. Beautiful */
+    top: 50%;
+    transform: translate(0 , -50%);
+    z-index: -100;
 }
 
 .counter {
@@ -333,7 +350,7 @@ input {
 }
 
 .social-media-icons {
-    margin-top: 8rem;
+    padding: 6rem 0;
     display: flex;
     justify-content: center;
 }
@@ -352,4 +369,8 @@ footer {
     line-height: 5rem;
     background: linear-gradient(to left, rgba(49, 49, 211, 1), rgba(194, 67, 194, 1));
     color: rgba(255,255,255,0.5);
+}
+
+footer p {
+    margin: 0;
 }
