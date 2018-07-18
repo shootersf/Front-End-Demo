@@ -204,6 +204,10 @@ h3 {
 
 }
 
+.service p {
+    margin: 0;
+}
+
 .material-icons {
     font-size: 3rem !important;
     color: white;
