@@ -39,6 +39,7 @@ nav {
     top: 0;
     left: 0;
     z-index: 100;
+    background: rgba(0, 0, 0, 0);
 }
 
 .nav-dark {
@@ -74,6 +75,10 @@ nav {
 }
 
 .nav-links li a:hover {
+    color: var(--dark-purple);
+}
+
+.nav-links .active {
     color: var(--dark-purple);
 }
 
@@ -358,6 +363,7 @@ h3 {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
     margin: 2rem auto;
+    padding-top: 3rem;
 }
 
 #message {
