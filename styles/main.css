@@ -119,8 +119,11 @@ h1 {
     cursor: pointer;
 }
 
-.button:focus {outline:0;}
+.button:focus {
+    outline: 0;
+}
 
+.button.active,
 .button:hover,
 .solid-button {
     border: none;
@@ -138,7 +141,7 @@ h1 {
 
 section {
     background: white;
-    padding-top: 8rem;
+    padding-top: 7rem;
 }
 
 h2 {
@@ -147,6 +150,7 @@ h2 {
     letter-spacing: 3px;
     font-size: 1.7rem;
     position: relative;
+    padding-top: 4rem;
     margin-bottom: 4rem;
 }
 
