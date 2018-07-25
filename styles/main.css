@@ -126,7 +126,6 @@ h1 {
 .button.active,
 .button:hover,
 .solid-button {
-    border: none;
     background: var(--light-purple);
     color: var(--font-light);
 }
