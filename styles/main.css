@@ -256,9 +256,17 @@ h3 {
     padding: 3rem 0;
     width: 80%;
     grid-template-columns: repeat(4, 170px);
-    grid-template-rows: repeat(3, auto);
+    grid-template-rows: repeat(3, 170px);
     gap: 20px;
     justify-content: center;
+}
+
+.gallery-image {
+    transition : transform 800ms ease-in-out;
+}
+
+.no-transition {
+    transition: none !important;
 }
 
 .stats {
@@ -269,7 +277,8 @@ h3 {
 }
 
 .static-background-image {
-    width: 100%;
+    min-width: 100%;
+    min-height: 100%;
     position: fixed;
     /* centers the image vertically moving down half the page and then
     translating back half it's size. Beautiful */
@@ -455,13 +464,13 @@ footer p {
         padding: 3rem 0;
         width: 100%;
         grid-template-columns: repeat(3, 140px);
-        grid-template-rows: repeat(4, auto);
+        grid-template-rows: repeat(4, 140px);
         gap: 10px;
         justify-content: center;
     }
 
     .gallery-image-container img {
-        width: 100%;
+        width: 140px;
     }
 
     section p {
@@ -490,7 +499,7 @@ footer p {
         padding: 3rem 0;
         width: 100%;
         grid-template-columns: repeat(2, 140px);
-        grid-template-rows: repeat(6, auto);
+        grid-template-rows: repeat(6, 140px);
         gap: 5px;
         justify-content: center;
     }

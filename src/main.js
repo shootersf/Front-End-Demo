@@ -32,11 +32,15 @@ function setImageAbsCoords() {
     let images = document.getElementsByClassName("gallery-image");
     for (let image of images)
     {
-        let y = image.offsetTop + "px";
-        let x = image.offsetLeft + "px";
+        //for later do not update if already set to absolute position
+        if (image.style.position !== "absolute")
+        {
+            let y = image.offsetTop + "px";
+            let x = image.offsetLeft + "px";
 
-        image.style.top = y;
-        image.style.left = x;
+            image.style.top = y;
+            image.style.left = x;
+        }
     }
 }
 setImageAbsCoords();
@@ -68,10 +72,24 @@ function galleryButtonClicked() {
     let galleryButtons = document.getElementsByClassName("gallery-button");
     makeOneOfGroupActive(galleryButtons, this);
 
+    //gather images old positions
+    let images = document.getElementsByClassName("gallery-image");
+    console.log(images.length);
+    for (let image of images) 
+    {
+        image.dataset.oldposx = image.offsetLeft;
+        image.dataset.oldposy = image.offsetTop;
+    }
+
+    //show only group images
     if (this.dataset.group == 0)
         showAllGalleryImages();
     else
         showGalleryImagesGroup(this.dataset.group);
+
+    let staticImages = Array.from(images).filter(img => img.style.position === "static");
+    transitionRemainingImagesToNewPos(staticImages);
+
 }
 
 //HELPER FUNCTIONS
@@ -147,15 +165,40 @@ function showGalleryImagesGroup(group) {
 }
 
 function showGalleryImage(image) {
+    //set wasHidden flag for transitionRemainingImagesToNewPost to reset scale before turning off transitions
+    if (image.style.position === "absolute")
+        image.dataset.wasHidden = true;
+    else
+        image.dataset.wasHidden = false;
+    
     image.style.position = "static";
-    image.style.transform = "scale(1)";
+    image.style.transform = "none";
 }
 
 function hideGalleryImage(image) {
     image.style.position = "absolute";
-    //image.style.zindex = "2";
     image.style.transform = "scale(0)";
-    image.style.transition = "transform 400ms ease-in-out";
+}
 
+function transitionRemainingImagesToNewPos(images) {
+    for (let image of images)
+    {
+        //turn off transitions
+        image.classList.add("no-transition");
+        //move back to old position before gallery reshaped.
+        diffx = image.dataset.oldposx - image.offsetLeft;
+        diffy = image.dataset.oldposy - image.offsetTop;
+        image.style.transform = `translate(${diffx}px, ${diffy}px)`;
+        //set scale back to 0 if had been hidden before now
+        if (image.dataset.wasHidden === 'true')
+            image.style.transform += ` scale(0)`;
+        
+        image.offsetHeight; //force a redraw
+        //turn on transition and move to new position/scale
+        image.classList.remove("no-transition");
+        image.style.transform = "none";
+    }
+    //update top and left to new position
+    setImageAbsCoords();
 }
 
