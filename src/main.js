@@ -28,6 +28,7 @@
 
 //adds top and left to each gallery image that matches it's current position. Declared and called
 //seperately as may need to recall on window resize
+//TODO: recall on resize
 function setImageAbsCoords() {
     let images = document.getElementsByClassName("gallery-image");
     for (let image of images)
@@ -44,18 +45,31 @@ function setImageAbsCoords() {
     }
 }
 setImageAbsCoords();
+
+
 /*EVENT HANDLERS*/
 
-//Watches for a point during scrolling to toggle the navbar look and updates active link at all times
 window.onscroll = function() {
     const SHOULD_BE_DARK = 160;
-
+    //adjust nav look based on scroll 
     if(window.scrollY >= SHOULD_BE_DARK && !darkNavCheck())
         toggleNav();
     else if(window.scrollY < SHOULD_BE_DARK && darkNavCheck())
         toggleNav();
     
+    //highlight active link on scroll bar
     adjustActiveLinkNav(window.scrollY);
+
+    //check if stat counter is visible for the first time and run counters
+    let stats = document.getElementById("stats-container");
+    if(stats.dataset.seen === "false")
+    {
+        if (checkIfVisible(stats, window.scrollY, document.documentElement.clientHeight))
+        {
+            runStatsCounters();
+            stats.dataset.seen = "true";
+        }
+    }
 }
 
 //Learn more button. Scrolls to about.
@@ -87,6 +101,7 @@ function galleryButtonClicked() {
     else
         showGalleryImagesGroup(this.dataset.group);
 
+    //Fake transitioning remaining images to their new position
     let staticImages = Array.from(images).filter(img => img.style.position === "static");
     transitionRemainingImagesToNewPos(staticImages);
 
@@ -105,7 +120,7 @@ function toggleNav() {
 }
 
 function adjustActiveLinkNav(winScroll) {
-    let aboveScroll;
+    let aboveScroll;    //will point to the last section above winScroll
 
     const sections = document.getElementsByTagName("section");
     const links = document.getElementsByClassName("nav-link");
@@ -202,3 +217,31 @@ function transitionRemainingImagesToNewPos(images) {
     setImageAbsCoords();
 }
 
+//checks if all of an element is on screen.
+function checkIfVisible(element, viewTop, winHeight) {
+        const bottomScroll = viewTop + winHeight;
+        const elementBottom = element.offsetTop + element.offsetHeight;
+        return bottomScroll >= elementBottom ? true : false;
+}
+
+//creates a counting effect starting at one to a final number
+function runStatsCounters() {
+    const TOTAL_ANIM_TIME = 1500;
+    let counters = document.getElementsByClassName("counter")
+    for (let counter of counters)
+    {
+        //final number displayed in the counter
+        const final = Number(counter.dataset.final);
+        const textElement = counter.querySelector(".counter-text");
+        //create staggered timeouts to go from 1 to Final in TOTAL_ANIM_TIME
+        for (let i = 2; i <= final; i++)
+        {
+            const animTime = TOTAL_ANIM_TIME * ((i - 1)/(final - 1));
+            //pass i as num so incrementing i in for loop doesn't mess up code.
+            setTimeout(num => {
+                textElement.textContent = num;
+            }, animTime, i);
+        }
+
+    }
+}
