@@ -19,11 +19,14 @@
 
 //adds galleryButtonClicked function to all gallery buttons
 (function() {
-    let galleryButtons = document.getElementsByClassName("gallery-button");
-    for (let i = 0; i < galleryButtons.length; i++)
-    {
-        galleryButtons[i].addEventListener("click", galleryButtonClicked);
-    }
+    addEventListenerToMultiples(galleryButtonClicked, "click",
+                            document.getElementsByClassName("gallery-button"));
+})();
+
+//adds testimonialButtonClicked function to all testimonial buttons
+(function() {
+    addEventListenerToMultiples(testimonalButtonClicked, "click",
+                            document.getElementsByClassName("testimonial-button")); 
 })();
 
 //adds top and left to each gallery image that matches it's current position. Declared and called
@@ -45,7 +48,6 @@ function setImageAbsCoords() {
     }
 }
 setImageAbsCoords();
-
 
 /*EVENT HANDLERS*/
 
@@ -107,7 +109,139 @@ function galleryButtonClicked() {
 
 }
 
+function testimonalButtonClicked() {
+    //Highlight the clicked button
+    const testimonialButtons = document.getElementsByClassName("testimonial-button");
+    makeOneOfGroupActive(testimonialButtons, this);
+    //adjust testimonial containers position to change focus
+    //calculate transformation
+    const testWidth = getTestimonialWidth();
+    const trans = testWidth * Number(this.dataset.index) * -1;
+    //get container and apply transition
+    const testContainer = document.getElementById("testimonials-container");
+    testContainer.classList.add("testimonials-container-transition");
+    testContainer.style.transform = `translateX(${trans}px)`;
+    // // at end of transition remove the class so drag and drop is not effected.
+    // testContainer.addEventListener("transitionend", function() {
+    //     testContainer.classList.remove("testimonials-container-transition");
+    //     testContainer.removeEventListener("transitionend");
+    //});
+}
+
+//add mouse handlers to testimonial container and closure on variables and functions
+(function() {
+    const tContainer = document.getElementById("testimonials-container");
+    tContainer.addEventListener("mousedown", testimonialMouseStart);
+    tContainer.addEventListener("mouseleave", testimonialMouseEnd);
+    tContainer.addEventListener("mouseup", testimonialMouseEnd);
+    tContainer.addEventListener("mousemove", testimonialMouseMove);
+
+    let isDown = false;
+    let startMouseX;
+    let initialTranslate;
+    let finalTranslate;
+
+    function testimonialMouseStart(event) {
+        isDown = true;
+        //turn off transitions
+        tContainer.classList.remove("testimonials-container-transition");
+        tContainer.classList.add("testimonial-grabbed");
+        //get initial Translate
+        initialTranslate = getTranslateX(tContainer);
+        finalTranslate = initialTranslate;  //set final if mouse doesn't move
+        //set startMouseX
+        startMouseX = event.pageX;
+    }
+
+    function testimonialMouseEnd() {
+        isDown = false;
+        tContainer.classList.remove("testimonial-grabbed");
+        scrollToCorrectTestimonial();
+    }
+
+    function testimonialMouseMove(event) {
+        if (!isDown)
+            return;
+        
+        event.preventDefault;
+        moveTestimonyWithinBounds(startMouseX, event.pageX);
+    }
+
+    function moveTestimonyWithinBounds(start, finish)
+    {
+        const diff = (finish - start) * 2;
+        finalTranslate = initialTranslate + diff;
+        const MIN = getTestimonialWidth() * -2;
+        const MAX = 0;
+        if (finalTranslate >= MIN && finalTranslate <= MAX)
+        {
+            tContainer.style.transform = `translateX(${finalTranslate}px)`;
+        }
+    
+    }
+
+    function scrollToCorrectTestimonial() {
+        const THRESHOLD = 15;
+        const finalDiff = finalTranslate - initialTranslate;
+        const tWidth = getTestimonialWidth();
+        tContainer.classList.add("testimonials-container-transition");
+
+
+        //if didn't move enough reset
+        if(Math.abs(finalDiff) < THRESHOLD)
+        {
+            tContainer.style.transform = `translateX(${initialTranslate}px)`;
+        }
+        //if it moved less than one testimonial go to that
+        else if (Math.abs(finalDiff) < tWidth)
+        {
+            let newTrans;
+            if (finalDiff > 0)
+            {
+                newTrans = initialTranslate + tWidth;
+            }
+            else
+            {
+                newTrans = initialTranslate - tWidth;
+            }
+            tContainer.style.transform = `translateX(${newTrans}px)`;
+            updateTestButtonByTrans(newTrans)
+        }
+        //if more than one move two
+        else
+        {
+            let newTrans;
+            if (finalDiff > 0)
+            {
+                newTrans = initialTranslate + 2 * tWidth;
+            }
+            else
+            {
+                newTrans = initialTranslate - 2 * tWidth;
+            }
+            tContainer.style.transform = `translateX(${newTrans}px)`;
+            updateTestButtonByTrans(newTrans);
+        }
+
+    }
+
+    function updateTestButtonByTrans(trans) {
+        const id = - trans / getTestimonialWidth();
+        console.log(id);
+        const btns = document.getElementsByClassName("testimonial-button");
+        makeOneOfGroupActive(btns, btns[id]);
+    }
+})();
+
 //HELPER FUNCTIONS
+
+function addEventListenerToMultiples(func, event, group)
+{
+    for (let element of group)
+    {
+        element.addEventListener(event, func);
+    }
+}
 
 function darkNavCheck() {
     let nav = document.getElementById("nav");
@@ -244,4 +378,19 @@ function runStatsCounters() {
         }
 
     }
+}
+
+function getTestimonialWidth()
+{
+    let test = document.querySelector(".testimonial");
+    return test.offsetWidth;
+}
+
+function getTranslateX(element) {
+    if (!element.style.transform)
+        return 0;
+    
+    const transStyle = element.style.transform;
+    const translateX = Number(transStyle.replace(/[^\d.-]/g, ""));
+    return translateX;
 }

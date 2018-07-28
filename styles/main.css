@@ -327,6 +327,7 @@ h3 {
     bottom:0;
     width: 25vw;
     background: white;
+    z-index: 10;
 }
 
 .left-block {
@@ -343,12 +344,22 @@ h3 {
     margin-top: 6rem;
 }
 
+.testimonials-container-transition {
+    transition : transform 500ms ease-in-out;
+}
+
+.testimonial-grabbed {
+    cursor: -webkit-grabbing;
+}
+
 .testimonial {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 0;
     flex: 0 0 50vw;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .testimonial-image {
@@ -356,6 +367,8 @@ h3 {
     width: 200px;
     border-radius: 10%;
     max-width: 100%;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .testimonial-button-container {
