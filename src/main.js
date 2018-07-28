@@ -154,6 +154,10 @@ function testimonalButtonClicked() {
     }
 
     function testimonialMouseEnd() {
+        //escape if mouse leave calls but mouse is not down
+        if(!isDown)
+            return;
+        
         isDown = false;
         tContainer.classList.remove("testimonial-grabbed");
         scrollToCorrectTestimonial();
@@ -181,7 +185,7 @@ function testimonalButtonClicked() {
     }
 
     function scrollToCorrectTestimonial() {
-        const THRESHOLD = 15;
+        const THRESHOLD = 30;
         const finalDiff = finalTranslate - initialTranslate;
         const tWidth = getTestimonialWidth();
         tContainer.classList.add("testimonials-container-transition");
