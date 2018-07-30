@@ -286,21 +286,42 @@ h3 {
     cursor: pointer;
 }
 
-.img-container::after {
-    position: absolute;
-    content: "";
-    top: 0;
-    left: 0;
-    z-index: 5;
-    height: 50px;
-    width: 50px;
-    background: #666;
-}
-
 .no-transition {
     transition: none !important;
 }
 
+.img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(0, 0, 0);
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: opacity 400ms linear;
+}
+
+.img-text {
+    text-align: center;
+    width: 100%;
+    transform: translateY(15px);
+    color: rgb(0, 0, 0);
+    transition: all 400ms ease-in-out;
+    transition-property: color, transform;
+}
+
+.img-overlay:hover {
+    opacity: .8;
+    cursor: pointer;
+}
+
+.img-overlay:hover .img-text {
+    transform: translateY(0);
+    color: var(--font-light);
+}
 .stats {
     padding: 5rem 0;
     color: var(--font-light);
