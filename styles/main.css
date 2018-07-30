@@ -268,8 +268,33 @@ h3 {
     justify-content: center;
 }
 
+.img-container {
+    transition : transform 800ms ease-in-out;
+    position: relative;
+}
+
 .gallery-image {
     transition : transform 800ms ease-in-out;
+}
+
+.img-container:hover {
+    transform: scale(1.1);
+}
+
+.gallery-image:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.img-container::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    z-index: 5;
+    height: 50px;
+    width: 50px;
+    background: #666;
 }
 
 .no-transition {

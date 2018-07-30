@@ -29,26 +29,6 @@
                             document.getElementsByClassName("testimonial-button")); 
 })();
 
-//adds top and left to each gallery image that matches it's current position. Declared and called
-//seperately as may need to recall on window resize
-//TODO: recall on resize
-function setImageAbsCoords() {
-    let images = document.getElementsByClassName("gallery-image");
-    for (let image of images)
-    {
-        //for later do not update if already set to absolute position
-        if (image.style.position !== "absolute")
-        {
-            let y = image.offsetTop + "px";
-            let x = image.offsetLeft + "px";
-
-            image.style.top = y;
-            image.style.left = x;
-        }
-    }
-}
-setImageAbsCoords();
-
 /*EVENT HANDLERS*/
 
 window.onscroll = function() {
@@ -89,8 +69,7 @@ function galleryButtonClicked() {
     makeOneOfGroupActive(galleryButtons, this);
 
     //gather images old positions
-    let images = document.getElementsByClassName("gallery-image");
-    console.log(images.length);
+    let images = document.getElementsByClassName("img-container");
     for (let image of images) 
     {
         image.dataset.oldposx = image.offsetLeft;
@@ -104,7 +83,7 @@ function galleryButtonClicked() {
         showGalleryImagesGroup(this.dataset.group);
 
     //Fake transitioning remaining images to their new position
-    let staticImages = Array.from(images).filter(img => img.style.position === "static");
+    let staticImages = Array.from(images).filter(img => img.style.position === "relative");
     transitionRemainingImagesToNewPos(staticImages);
 
 }
@@ -299,7 +278,7 @@ function makeOneOfGroupActive(group, toActive) {
 }
 
 function showAllGalleryImages() {
-    let images = document.getElementsByClassName("gallery-image");
+    let images = document.getElementsByClassName("img-container");
     for (let image of images)
     {
         showGalleryImage(image);
@@ -307,14 +286,16 @@ function showAllGalleryImages() {
 }
 
 function showGalleryImagesGroup(group) {
-    let images = document.getElementsByClassName("gallery-image");
+    let images = document.getElementsByClassName("img-container");
+    let hiddenImages = [];
     for (let image of images)
     {
         if (image.dataset.group === group)
             showGalleryImage(image);
         else
-            hideGalleryImage(image);
+            hiddenImages.push(image);
     }
+    hideGalleryImages(hiddenImages);
 }
 
 function showGalleryImage(image) {
@@ -324,13 +305,21 @@ function showGalleryImage(image) {
     else
         image.dataset.wasHidden = false;
     
-    image.style.position = "static";
+    image.style.position = "relative";
     image.style.transform = "none";
+    image.style.top = 0;
+    image.style.left = 0;
 }
 
-function hideGalleryImage(image) {
-    image.style.position = "absolute";
-    image.style.transform = "scale(0)";
+function hideGalleryImages(images) {
+    for(let image of images)
+    {
+        image.style.top = `${image.dataset.oldposy}px`;
+        image.style.left = `${image.dataset.oldposx}px`;
+        image.style.position = "absolute";
+        image.style.transform = "scale(0)";
+    }
+    
 }
 
 function transitionRemainingImagesToNewPos(images) {
@@ -351,8 +340,6 @@ function transitionRemainingImagesToNewPos(images) {
         image.classList.remove("no-transition");
         image.style.transform = "none";
     }
-    //update top and left to new position
-    setImageAbsCoords();
 }
 
 //checks if all of an element is on screen.
