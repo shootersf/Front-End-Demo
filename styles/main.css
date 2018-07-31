@@ -420,6 +420,8 @@ h3 {
     padding: 0;
     flex: 0 0 50vw;
     user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
     -webkit-user-drag: none;
 }
 
@@ -429,6 +431,9 @@ h3 {
     border-radius: 10%;
     max-width: 100%;
     user-select: none;
+    user-drag: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
     -webkit-user-drag: none;
 }
 
