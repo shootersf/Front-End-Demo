@@ -11,6 +11,10 @@
                 behavior: 'smooth',
                 block: 'start'
             })
+            if(onMobile())
+            {
+                hideMobileNavLinks();
+            }
             history.pushState(null, null, hashval)
             e.preventDefault()
         })
@@ -167,6 +171,8 @@ function testimonalButtonClicked() {
         const THRESHOLD = 30;
         const finalDiff = finalTranslate - initialTranslate;
         const tWidth = getTestimonialWidth();
+        const MIN = tWidth * -2;
+        const MAX = 0;
         tContainer.classList.add("testimonials-container-transition");
 
 
@@ -181,11 +187,11 @@ function testimonalButtonClicked() {
             let newTrans;
             if (finalDiff > 0)
             {
-                newTrans = initialTranslate + tWidth;
+                newTrans = Math.min(initialTranslate + tWidth, MAX);
             }
             else
             {
-                newTrans = initialTranslate - tWidth;
+                newTrans = Math.max(initialTranslate - tWidth, MIN);
             }
             tContainer.style.transform = `translateX(${newTrans}px)`;
             updateTestButtonByTrans(newTrans)
@@ -195,12 +201,12 @@ function testimonalButtonClicked() {
         {
             let newTrans;
             if (finalDiff > 0)
-            {
-                newTrans = initialTranslate + 2 * tWidth;
+            {   
+                newTrans = Math.min(initialTranslate + 2 * tWidth, MAX);
             }
             else
             {
-                newTrans = initialTranslate - 2 * tWidth;
+                newTrans = Math.max(initialTranslate - 2 * tWidth, MIN);
             }
             tContainer.style.transform = `translateX(${newTrans}px)`;
             updateTestButtonByTrans(newTrans);
@@ -226,6 +232,14 @@ function addEventListenerToMultiples(func, event, group)
     }
 }
 
+function onMobile() {
+    return document.getElementById("toggle-label").style.display === "none" ? false : true;
+}
+
+function hideMobileNavLinks() {
+    document.getElementById("toggle").checked = false;
+}
+
 function darkNavCheck() {
     let nav = document.getElementById("nav");
     return nav.classList.contains("nav-dark") ? true : false;
@@ -234,6 +248,7 @@ function darkNavCheck() {
 
 function toggleNav() {
     document.getElementById("nav").classList.toggle("nav-dark");
+    document.getElementById("toggle-label").classList.toggle("mobile-toggle-label-light");
 }
 
 function adjustActiveLinkNav(winScroll) {
